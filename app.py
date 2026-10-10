@@ -20,24 +20,18 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>URL List</title>
-<style>
-  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-         max-width: 640px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
-  h1 { font-size: 1.5rem; }
-  form { display: flex; gap: 0.5rem; margin: 1rem 0 2rem; }
-  input[type=url], input[type=text] { flex: 1; padding: 0.5rem; font-size: 1rem; }
-  button { padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; }
-  ul { list-style: none; padding: 0; }
-  li { padding: 0.4rem 0; border-bottom: 1px solid #e0e0e0;
-       overflow-wrap: anywhere; }
-  .error { color: #a00; }
-  .empty { color: #555; }
-</style>
+<title>Custom URL Selector</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>URL List</h1>
+  <h1>Custom URL Selector</h1>
   {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  <div class="text-controls">
+    <button type="button" id="text-smaller" aria-label="Smaller text">A-</button>
+    <label for="text-size-slider">Text size</label>
+    <input type="range" id="text-size-slider" min="12" max="28" step="1" value="16">
+    <button type="button" id="text-larger" aria-label="Larger text">A+</button>
+  </div>
   <form action="{{ url_for('add_url') }}" method="post">
     <input type="text" name="url" placeholder="https://example.com" required>
     <button type="submit">Add URL</button>
@@ -51,6 +45,7 @@ PAGE = """<!doctype html>
   {% else %}
   <p class="empty">No URLs yet. Add one above.</p>
   {% endif %}
+  <script src="{{ url_for('static', filename='textsize.js') }}"></script>
 </body>
 </html>
 """
